@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chawarma + | Menu Officiel & Order Digital</title>
+    
+    <!-- PWA primary tags -->
+    <meta name="theme-color" content="#18181c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Chawarma +">
+    
+    <!-- Dynamic Manifest Data URI -->
+    <link rel="manifest" id="pwa-manifest">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#18181c',
+                        cardBg: '#222228',
+                        cardHover: '#2a2a32',
+                        gold: {
+                            light: '#f3e5ab',
+                            DEFAULT: '#d4af37',
+                            dark: '#aa7c11',
+                            glow: 'rgba(212, 175, 55, 0.25)'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar & visual refinements */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #18181c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #aa7c11;
+            border-radius: 4px;
+        }
+        
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border-glow {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 20px -2px rgba(212, 175, 55, 0.15);
+        }
+
+        .gold-border-glow:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 6px 25px 0px rgba(212, 175, 55, 0.25);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .active-tab {
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            color: #18181c !important;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+        }
+
+        .btn-gold-pulse {
+            animation: pulseGlow 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen pb-28 selection:bg-gold selection:text-darkBg">
+
+    <!-- Top Header -->
+    <header class="sticky top-0 z-40 bg-darkBg/90 backdrop-blur-md border-b border-gold/20">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-full border border-gold flex items-center justify-center bg-cardBg p-1 shadow-md shadow-gold/10">
+                    <!-- SVG Circular Logo Representation -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-gold">
+                        <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2" />
+                        <circle cx="50" cy="50" r="41" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" />
+                        <!-- Skewer icon -->
+                        <path d="M50 18 L50 45 M45 23 L55 23 M43 29 L57 29 M44 35 L56 35 M46 41 L54 41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Grill icon -->
+                        <path d="M38 68 C38 78, 62 78, 62 68 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M42 68 L42 62 M50 68 L50 62 M58 68 L58 62" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M42 77 L38 84 M58 77 L62 84" stroke="currentColor" stroke-width="2"/>
+                        <text x="50" y="56" text-anchor="middle" fill="#d4af37" font-size="9" font-family="Cinzel" font-weight="bold">Chawarma +</text>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-cinzel text-lg sm:text-xl font-bold tracking-wide gold-gradient-text uppercase">Chawarma +</h1>
+                    <p class="text-xs text-gray-400 font-medium">Luxe & Rôtisserie Gourmande</p>
+                </div>
+            </div>
+
+            <!-- Header Action Buttons -->
+            <div class="flex items-center space-x-2">
+                <!-- Location Selector Button -->
+                <button onclick="openLocationModal()" id="current-location-btn" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-cardBg border border-gold/30 text-xs font-medium text-gold hover:bg-cardHover transition-all">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold"></i>
+                    <span id="selected-location-name" class="truncate max-w-[100px] sm:max-w-[140px]">Angré 8è</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400"></i>
+                </button>
+
+                <!-- Install PWA Button (Hidden by default, shown when install prompt available) -->
+                <button id="pwa-install-btn" onclick="installPWA()" class="hidden flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-gold/10 border border-gold text-xs font-semibold text-gold hover:bg-gold hover:text-darkBg transition-all">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pt-4">
+        
+        <!-- Welcome Hero Banner -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-cardBg via-cardHover to-cardBg p-5 gold-border-glow mb-6">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-gold/5 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="relative z-10">
+                <div class="flex items-center space-x-2 mb-1">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gold/20 text-gold uppercase tracking-wider">Menu Digital</span>
+                    <span class="text-xs text-gray-400">| Commandes WhatsApp directes</span>
+                </div>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-white">L'art de la haute gastronomie rapide</h2>
+                <p class="text-xs text-gray-300 mt-1 max-w-lg">Parcourez notre carte exclusive, personnalisez vos plats et envoyez votre commande en un clic sur le WhatsApp de votre point de vente.</p>
+            </div>
+        </div>
+
+        <!-- Sticky Category Nav Bar -->
+        <div class="sticky top-[61px] z-30 bg-darkBg/95 backdrop-blur-md py-2 -mx-4 px-4 border-b border-gray-800/80 mb-6">
+            <div id="category-tabs" class="flex space-x-2 overflow-x-auto no-scrollbar py-1">
+                <!-- Dynamic Category Buttons populated via JS -->
+            </div>
+        </div>
+
+        <!-- Search bar -->
+        <div class="relative mb-6">
+            <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+            <input type="text" id="search-input" oninput="filterMenuItems()" placeholder="Rechercher un chawarma, un burger, un plat..." 
+                   class="w-full bg-cardBg border border-gray-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-gold/70 transition-all">
+        </div>
+
+        <!-- Menu Categories & Items List Container -->
+        <div id="menu-container" class="space-y-8">
+            <!-- Dynamic Content populated via JavaScript -->
+        </div>
+
+    </main>
+
+    <!-- Floating Cart Navigation Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-darkBg via-darkBg/95 to-transparent pointer-events-none">
+        <div class="max-w-4xl mx-auto pointer-events-auto">
+            <button onclick="openCartModal()" id="floating-cart-btn" class="w-full bg-gradient-to-r from-gold-dark via-gold to-gold-dark hover:brightness-110 text-darkBg font-bold py-3.5 px-5 rounded-2xl shadow-lg flex items-center justify-between transition-all transform active:scale-[0.99] btn-gold-pulse">
+                <div class="flex items-center space-x-3">
+                    <div class="relative bg-darkBg/20 p-2 rounded-xl">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-darkBg"></i>
+                        <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 bg-white text-darkBg text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-gold">0</span>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-xs uppercase font-extrabold tracking-wider text-darkBg/80">Mon Panier</span>
+                        <span id="cart-subtotal-text" class="text-sm font-black">0 FCFA</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-1 font-extrabold text-sm uppercase tracking-wide">
+                    <span>Commander</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. Location Selection Modal -->
+    <div id="location-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-cardBg border border-gold/40 rounded-2xl max-w-md w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="location-modal-content">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-700/60">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-gold"></i>
+                    <h3 class="font-cinzel text-lg font-bold text-white">Choisir le Point de Vente</h3>
+                </div>
+                <button onclick="closeLocationModal()" class="text-gray-400 hover:text-white p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <p class="text-xs text-gray-300 my-4">Sélectionnez le restaurant Chawarma + le plus proche de vous pour diriger votre commande WhatsApp :</p>
+            
+            <div class="space-y-3" id="locations-list">
+                <!-- Dynamic locations populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Option Selection Modal (For items with variants/sizes) -->
+    <div id="option-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-cardBg border border-gold/40 rounded-t-2xl sm:rounded-2xl max-w-lg w-full p-6 shadow-2xl transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" id="option-modal-content">
+            <div class="flex items-start justify-between pb-3 border-b border-gray-700">
+                <div>
+                    <h3 id="opt-modal-title" class="font-cinzel text-lg font-bold text-white">Nom du Produit</h3>
+                    <p id="opt-modal-desc" class="text-xs text-gray-400 mt-0.5">Description de l'option</p>
+                </div>
+                <button onclick="closeOptionModal()" class="text-gray-400 hover:text-white p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="py-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gold uppercase tracking-wider mb-2">Choisissez votre option / Taille :</label>
+                    <div id="opt-modal-variants" class="space-y-2">
+                        <!-- Radio options dynamically injected -->
+                    </div>
+                </div>
+
+                <!-- Custom instructions / notes -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Instructions particulières (Optionnel) :</label>
+                    <input type="text" id="opt-modal-note" placeholder="Ex: Sans oignon, piment à part..." 
+                           class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold">
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-gray-700 flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] text-gray-400 block uppercase">Prix Total</span>
+                    <span id="opt-modal-price" class="text-lg font-bold text-gold">0 FCFA</span>
+                </div>
+                <button onclick="confirmAddToCartWithOptions()" class="bg-gold hover:bg-gold-light text-darkBg font-bold px-5 py-2.5 rounded-xl text-sm transition-all flex items-center space-x-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Ajouter au panier</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Cart Drawer / Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-cardBg border border-gold/40 rounded-t-2xl sm:rounded-2xl max-w-lg w-full p-5 shadow-2xl transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="cart-modal-content">
+            
+            <!-- Cart Header -->
+            <div class="flex items-center justify-between pb-3 border-b border-gray-700/80">
+                <div class="flex items-center space-x-2">
+                    <div class="p-1.5 rounded-lg bg-gold/10 text-gold">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-cinzel text-lg font-bold text-white">Votre Commande</h3>
+                        <p class="text-[11px] text-gray-400">Point de vente : <span id="cart-location-display" class="text-gold font-medium">Angré 8è</span></p>
+                    </div>
+                </div>
+                <button onclick="closeCartModal()" class="text-gray-400 hover:text-white p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Scrollable List -->
+            <div id="cart-items-container" class="py-4 overflow-y-auto flex-1 space-y-3 divide-y divide-gray-800">
+                <!-- Cart items dynamically rendered -->
+            </div>
+
+            <!-- Order Settings & Checkout Form -->
+            <div class="pt-3 border-t border-gray-700 space-y-3">
+                
+                <!-- Order Type (Dine-in / Takeaway / Delivery) -->
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-300 uppercase tracking-wider mb-1.5">Mode de consommation :</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" onclick="setOrderType('emporter')" id="btn-type-emporter" class="py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center">À Emporter</button>
+                        <button type="button" onclick="setOrderType('surplace')" id="btn-type-surplace" class="py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center">Sur Place</button>
+                        <button type="button" onclick="setOrderType('livraison')" id="btn-type-livraison" class="py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center">Livraison</button>
+                    </div>
+                </div>
+
+                <!-- Customer Details Optional Inputs -->
+                <div id="delivery-address-field" class="hidden">
+                    <input type="text" id="cust-address" placeholder="Adresse complète de livraison..." 
+                           class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold">
+                </div>
+                
+                <div>
+                    <input type="text" id="cust-notes" placeholder="Notes ou précisions pour le restaurant..." 
+                           class="w-full bg-darkBg border border-gray-700 rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold">
+                </div>
+
+                <!-- Total summary -->
+                <div class="bg-darkBg p-3 rounded-xl border border-gray-800 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-gray-400 block">Total estimé :</span>
+                        <span class="text-xs text-gray-500">Paiement à la livraison / comptoir</span>
+                    </div>
+                    <span id="cart-total-modal" class="text-xl font-black gold-gradient-text">0 FCFA</span>
+                </div>
+
+                <!-- Final WhatsApp Button -->
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center space-x-2 shadow-lg transition-all active:scale-[0.98]">
+                    <i data-lucide="message-circle" class="w-5 h-5 fill-current"></i>
+                    <span>Envoyer la commande sur WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DATA STRUCTURE ---
+        const LOCATIONS = [
+            { id: 'angre8', name: 'Angré 8ème tranche', phone: '2250759071911', displayPhone: '+225 07 59 07 19 11' },
+            { id: 'angre7', name: 'Angré 7ème tranche', phone: '2250708906898', displayPhone: '+225 07 08 90 68 98' },
+            { id: 'bonoumin', name: 'Riviera Bonoumin', phone: '2250797050536', displayPhone: '+225 07 97 05 05 36' },
+            { id: 'cocody', name: 'Cocody Cité SIR', phone: '2250749407046', displayPhone: '+225 07 49 40 70 46' }
+        ];
+
+        const MENU_DATA = [
+            {
+                id: 'chawarmas',
+                title: 'Nos Chawarmas',
+                icon: 'flame',
+                items: [
+                    { id: 'chaw-stand', name: 'Chawarma Stand', desc: 'Mélange 3 choix servi en sandwich généreux', price: 2500 },
+                    { id: 'chaw-plat', name: 'Chawarma Plat', desc: 'Mélange servi sur plat gourmand avec accompagnement', price: 5000 },
+                    { id: 'chaw-supreme', name: 'Chawarma Suprême', desc: 'Garniture riche avec extra sauce et fromage melted', price: 3000 },
+                    { id: 'chaw-royal', name: 'Chawarma Royal', desc: 'Format géant ultra gourmand, viande sélectionnée', price: 6000 }
+                ]
+            },
+            {
+                id: 'rotisserie',
+                title: 'Rôtisserie & Plats',
+                icon: 'drumstick',
+                bannerInfo: 'Viandes au choix : Poulet, Viande, Rognon, Langue, Cœur, Foie, Cervelle, Boulette, Rosto, Gésier, Taouk, Merguez, Sojok.',
+                items: [
+                    { id: 'poul-complet', name: 'Poulet Complet + Frites', desc: 'Poulet entier rôti ou braisé au choix + grande portion frites', price: 9000 },
+                    { id: 'poul-pane', name: 'Poulet Entier Pané + Frites', desc: 'Poulet entier croustillant + frites', price: 9000 },
+                    { id: 'demi-poul', name: 'Demi-Poulet + Frites', desc: 'Demi poulet rôti ou braisé + frites', price: 5000 },
+                    { id: 'demi-poul-pane', name: '1/2 Poulet Pané + Frites', desc: 'Demi poulet pané croustillant + frites', price: 5000 },
+                    { id: 'plat-krispy', name: 'Plat Krispy', desc: 'Morceaux de poulet croustillants doreurs', price: 5000 },
+                    { id: 'steak-creme', name: 'Steak à la Crème Fraîche', desc: 'Tendre steak nappé de sa sauce crème onctueuse', price: 6000 },
+                    { id: 'plat-escalope', name: 'Plat Escalope', desc: 'Escalope panée ou à la crème fraîche au choix', price: 6000 },
+                    { id: 'plat-grille', name: 'Plat de Viande Grillée', desc: 'Gésier, Taouk ou assortiment grillé au feu de bois', price: 5000 },
+                    { id: 'portion-frites', name: 'Plat de Frites', desc: 'Portion généreuse de frites dorées et croustillantes', price: 1500 }
+                ]
+            },
+            {
+                id: 'sandwiches',
+                title: 'Nos Sandwiches',
+                icon: 'sandwich',
+                items: [
+                    { 
+                        id: 'sand-special', 
+                        name: 'Sandwich Spécial', 
+                        desc: 'Recette au choix : Fajita, Francisca, Mexicana, Poulet, Poulet Chinois, Tex-Mex, Philadelphia Viande',
+                        variants: [
+                            { label: 'Format Solo', price: 3000 },
+                            { label: 'Format Plat (avec accompagnement)', price: 5000 }
+                        ]
+                    },
+                    { id: 'tacos-pv', name: 'Tacos Poulet ou Viande', desc: 'Garni de frites croustillantes et sauce fromagère', price: 5000 }
+                ]
+            },
+            {
+                id: 'salades',
+                title: 'Salades & Mana\'iche',
+                icon: 'utensils',
+                items: [
+                    { id: 'entree-mixte', name: 'Entrée Mixte', desc: 'Assortiment fraîcheur : Beyrouth, Taboulé, Fatouche', price: 5000 },
+                    { id: 'salade-nicoise', name: 'Salade Niçoise', desc: 'Complète, fraîche et assaisonnée', price: 4000 },
+                    { id: 'mana-fromage', name: 'Mana\'iche Fromage', desc: 'Galette libanaise chaude au fromage fondant', price: 2500 },
+                    { id: 'mana-viande', name: 'Mana\'iche Viande / Cocktail / Légume', desc: 'Galette traditionnelle garnie au choix', price: 2000 },
+                    { id: 'mana-zaatar', name: 'Mana\'iche Zaatar', desc: 'Thym sauvage, sésame et huile d\'olive fine', price: 1000 }
+                ]
+            },
+            {
+                id: 'pizzas',
+                title: 'L\'Atelier Pizzas',
+                icon: 'pizza',
+                bannerInfo: 'Variétés : Royale • Mexicaine • Polita • Reine • Fajitas • Viande hachée • Chawarma • Margherita • Au Thon • Bolognoise • Picasso • Calabraise',
+                items: [
+                    { 
+                        id: 'pizza-classique', 
+                        name: 'Pizza Artisanale (Toutes variétés)', 
+                        desc: 'Sélectionnez votre taille préférée',
+                        variants: [
+                            { label: 'Petite', price: 5000 },
+                            { label: 'Moyenne', price: 6000 },
+                            { label: 'Grande', price: 7500 }
+                        ]
+                    },
+                    { 
+                        id: 'pizza-4saisons', 
+                        name: 'Pizza 4 Saisons', 
+                        desc: 'Garniture riche et équilibrée aux 4 saveurs',
+                        variants: [
+                            { label: 'Moyenne', price: 6000 },
+                            { label: 'Grande', price: 7500 }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'burgers',
+                title: 'Burgers Gourmets',
+                icon: 'burger',
+                items: [
+                    { id: 'burg-simple', name: 'Sandwich Burger', desc: 'Steak de bœuf simple façon boucher', price: 3000 },
+                    { id: 'burg-plus', name: 'Burger+', desc: 'Bœuf, fromage, œuf au plat et frites incluses', price: 4500 },
+                    { id: 'burg-chicken', name: 'Chicken Breast / Double Cheese', desc: 'Filet de poulet tendre ou double cheddar fondant', price: 5000 },
+                    { id: 'burg-mushroom', name: 'Mushroom Burger', desc: 'Nappé d\'une onctueuse sauce aux champignons frais', price: 5000 },
+                    { id: 'burg-zinger', name: 'Zinger Burger', desc: 'Filet de poulet épicé et pané super croustillant', price: 5000 },
+                    { id: 'burg-big', name: 'Big Burger', desc: 'Double bœuf, fromages, œufs, frites généreuses', price: 8000 }
+                ]
+            },
+            {
+                id: 'desserts',
+                title: 'Desserts & Douceurs',
+                icon: 'ice-cream',
+                items: [
+                    { id: 'crepe-plus', name: 'Crêpe+', desc: 'Découpée façon pasta, chocolat et boule de glace vanille', price: 4000 },
+                    { id: 'crepe-nutella', name: 'Crêpe Nutella', desc: 'Généreusement garnie de vrai Nutella fondant', price: 3000 },
+                    { id: 'milkshake', name: 'Milkshake Gourmand', desc: 'Parfums au choix : Vanille, Chocolat, Fraise, Américain', price: 2000 },
+                    { id: 'glace-double', name: 'Glace Double Scoop', desc: 'Deux boules au choix parmi nos parfums', price: 1000 }
+                ]
+            },
+            {
+                id: 'boissons',
+                title: 'Boissons Fraîches & Café',
+                icon: 'cup-soda',
+                items: [
+                    { id: 'jus-energy', name: 'Jus Naturel Maison / Energy Drink', desc: 'Jus frais pressé ou canette d\'énergie', price: 1500 },
+                    { id: 'sodas', name: 'Sodas en Canette', desc: 'Coca-Cola, Fanta, Sprite, etc. (33cl)', price: 1000 },
+                    { id: 'expresso', name: 'Café Expresso', desc: 'Café intense sélectionné', price: 1000 },
+                    { 
+                        id: 'eau-minerale', 
+                        name: 'Eau Minérale', 
+                        desc: 'Bouteille d\'eau minérale fraîche',
+                        variants: [
+                            { label: 'Petite Bouteille', price: 500 },
+                            { label: 'Grande Bouteille', price: 1000 }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // --- 2. STATE MANAGEMENT ---
+        let currentSelectedLocation = LOCATIONS[0];
+        let cart = []; // array of { id, uniqueKey, name, variantName, price, qty, note }
+        let currentCategory = MENU_DATA[0].id;
+        let selectedOrderType = 'emporter'; // emporter, surplace, livraison
+        let tempItemForModal = null;
+        let selectedVariantIndex = 0;
+        let deferredPrompt = null; // PWA prompt event
+
+        // --- 3. INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initPWA();
+            loadCartFromStorage();
+            renderCategoryTabs();
+            renderMenu();
+            renderLocationsList();
+            updateCartUI();
+            lucide.createIcons();
+
+            // Set initial order type button styling
+            setOrderType('emporter');
+        });
+
+        // --- 4. PWA MANIFEST INJECTION & PROMPT ---
+        function initPWA() {
+            // Generate Manifest JSON inline Data URI
+            const manifest = {
+                name: "Chawarma Plus",
+                short_name: "Chawarma+",
+                start_url: ".",
+                display: "standalone",
+                background_color: "#18181c",
+                theme_color: "#18181c",
+                icons: [
+                    {
+                        src: "https://placehold.co/192x192/18181c/d4af37?text=Chawarma%2B",
+                        sizes: "192x192",
+                        type: "image/png"
+                    },
+                    {
+                        src: "https://placehold.co/512x512/18181c/d4af37?text=Chawarma%2B",
+                        sizes: "512x512",
+                        type: "image/png"
+                    }
+                ]
+            };
+            const stringManifest = JSON.stringify(manifest);
+            const blob = new Blob([stringManifest], {type: 'application/json'});
+            const manifestURL = URL.createObjectURL(blob);
+            document.getElementById('pwa-manifest').setAttribute('href', manifestURL);
+
+            // Register dummy inline service worker
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
+                `;
+                const swBlob = new Blob([swCode], {type: 'application/javascript'});
+                const swUrl = URL.createObjectURL(swBlob);
+                navigator.serviceWorker.register(swUrl).catch(err => console.log('SW reg error', err));
+            }
+
+            // Capture install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const installBtn = document.getElementById('pwa-install-btn');
+                if (installBtn) installBtn.classList.remove('hidden');
+            });
+        }
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('pwa-install-btn').classList.add('hidden');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // --- 5. RENDER FUNCTIONS ---
+        function renderCategoryTabs() {
+            const container = document.getElementById('category-tabs');
+            container.innerHTML = MENU_DATA.map(cat => `
+                <button onclick="scrollToCategory('${cat.id}')" id="tab-${cat.id}" 
+                        class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border border-gray-800 bg-cardBg text-gray-300 hover:border-gold/50 flex items-center space-x-1.5">
+                    <i data-lucide="${cat.icon}" class="w-3.5 h-3.5"></i>
+                    <span>${cat.title}</span>
+                </button>
+            `).join('');
+            
+            highlightActiveTab(currentCategory);
+        }
+
+        function highlightActiveTab(catId) {
+            MENU_DATA.forEach(cat => {
+                const btn = document.getElementById(`tab-${cat.id}`);
+                if (btn) {
+                    if (cat.id === catId) {
+                        btn.className = "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border border-gold active-tab flex items-center space-x-1.5";
+                    } else {
+                        btn.className = "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border border-gray-800 bg-cardBg text-gray-300 hover:border-gold/50 flex items-center space-x-1.5";
+                    }
+                }
+            });
+        }
+
+        function scrollToCategory(catId) {
+            currentCategory = catId;
+            highlightActiveTab(catId);
+            const el = document.getElementById(`section-${catId}`);
+            if (el) {
+                const yOffset = -120; // Account for sticky headers
+                const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        }
+
+        function renderMenu(filterText = '') {
+            const container = document.getElementById('menu-container');
+            const term = filterText.toLowerCase().trim();
+
+            let html = '';
+
+            MENU_DATA.forEach(cat => {
+                // Filter items if search term is active
+                const filteredItems = cat.items.filter(item => 
+                    item.name.toLowerCase().includes(term) || 
+                    item.desc.toLowerCase().includes(term)
+                );
+
+                if (filteredItems.length === 0) return;
+
+                html += `
+                    <div id="section-${cat.id}" class="space-y-4 pt-2">
+                        <!-- Category Header -->
+                        <div class="flex items-center space-x-2 border-b border-gold/20 pb-2">
+                            <div class="p-1.5 rounded-lg bg-gold/10 text-gold">
+                                <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+                            </div>
+                            <h2 class="font-cinzel text-lg sm:text-xl font-bold text-white uppercase tracking-wider">${cat.title}</h2>
+                        </div>
+
+                        ${cat.bannerInfo ? `
+                            <div class="bg-gradient-to-r from-gold/10 via-gold/5 to-transparent border-l-2 border-gold p-3 rounded-r-xl text-xs text-gray-300 italic">
+                                ${cat.bannerInfo}
+                            </div>
+                        ` : ''}
+
+                        <!-- Grid of Items -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            ${filteredItems.map(item => renderItemCard(item, cat.id)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (html === '') {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 space-y-2">
+                        <i data-lucide="search-x" class="w-12 h-12 mx-auto text-gray-600"></i>
+                        <p class="text-sm">Aucun produit ne correspond à votre recherche.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = html;
+            }
+
+            lucide.createIcons();
+        }
+
+        function renderItemCard(item, catId) {
+            const hasVariants = item.variants && item.variants.length > 0;
+            const displayPrice = hasVariants 
+                ? `À partir de ${formatPrice(item.variants[0].price)}`
+                : formatPrice(item.price);
+
+            return `
+                <div class="bg-cardBg rounded-2xl p-4 border border-gray-800 hover:border-gold/40 transition-all flex flex-col justify-between group shadow-md hover:shadow-gold/5">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <h3 class="font-semibold text-white group-hover:text-gold transition-colors">${item.name}</h3>
+                            <span class="font-bold text-sm text-gold ml-2 whitespace-nowrap">${displayPrice}</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1 line-clamp-2">${item.desc}</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-gray-800/80 flex items-center justify-between">
+                        <span class="text-[10px] text-gray-500 uppercase font-medium">Chawarma +</span>
+                        <button onclick="handleAddItemClick('${catId}', '${item.id}')" 
+                                class="bg-gold/10 hover:bg-gold text-gold hover:text-darkBg font-semibold text-xs py-1.5 px-3 rounded-xl border border-gold/30 hover:border-gold transition-all flex items-center space-x-1">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>${hasVariants ? 'Choisir' : 'Ajouter'}</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterMenuItems() {
+            const val = document.getElementById('search-input').value;
+            renderMenu(val);
+        }
+
+        // --- 6. ITEM ADDITION & VARIANT MODAL LOGIC ---
+        function handleAddItemClick(catId, itemId) {
+            const cat = MENU_DATA.find(c => c.id === catId);
+            if (!cat) return;
+            const item = cat.items.find(i => i.id === itemId);
+            if (!item) return;
+
+            if (item.variants && item.variants.length > 0) {
+                // Open option modal for size/variant selection
+                tempItemForModal = item;
+                selectedVariantIndex = 0;
+                
+                document.getElementById('opt-modal-title').innerText = item.name;
+                document.getElementById('opt-modal-desc').innerText = item.desc;
+                document.getElementById('opt-modal-note').value = '';
+
+                const variantsContainer = document.getElementById('opt-modal-variants');
+                variantsContainer.innerHTML = item.variants.map((v, idx) => `
+                    <label class="flex items-center justify-between p-3 rounded-xl bg-darkBg border ${idx === 0 ? 'border-gold' : 'border-gray-800'} cursor-pointer hover:border-gold/60 transition-all">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="modal-variant" value="${idx}" ${idx === 0 ? 'checked' : ''} onchange="updateModalVariantSelection(${idx})" class="text-gold focus:ring-gold bg-darkBg">
+                            <span class="text-xs font-semibold text-white">${v.label}</span>
+                        </div>
+                        <span class="text-xs font-bold text-gold">${formatPrice(v.price)}</span>
+                    </label>
+                `).join('');
+
+                updateModalPriceDisplay();
+                openOptionModal();
+            } else {
+                // Directly add single item
+                addToCart({
+                    id: item.id,
+                    uniqueKey: item.id,
+                    name: item.name,
+                    variantName: null,
+                    price: item.price,
+                    qty: 1,
+                    note: ''
+                });
+            }
+        }
+
+        function updateModalVariantSelection(index) {
+            selectedVariantIndex = index;
+            const labels = document.querySelectorAll('#opt-modal-variants label');
+            labels.forEach((lbl, idx) => {
+                if (idx === index) {
+                    lbl.classList.remove('border-gray-800');
+                    lbl.classList.add('border-gold');
+                } else {
+                    lbl.classList.remove('border-gold');
+                    lbl.classList.add('border-gray-800');
+                }
+            });
+            updateModalPriceDisplay();
+        }
+
+        function updateModalPriceDisplay() {
+            if (!tempItemForModal || !tempItemForModal.variants) return;
+            const price = tempItemForModal.variants[selectedVariantIndex].price;
+            document.getElementById('opt-modal-price').innerText = formatPrice(price);
+        }
+
+        function confirmAddToCartWithOptions() {
+            if (!tempItemForModal) return;
+            const variant = tempItemForModal.variants[selectedVariantIndex];
+            const note = document.getElementById('opt-modal-note').value.trim();
+
+            const uniqueKey = `${tempItemForModal.id}-${selectedVariantIndex}-${note}`;
+
+            addToCart({
+                id: tempItemForModal.id,
+                uniqueKey: uniqueKey,
+                name: tempItemForModal.name,
+                variantName: variant.label,
+                price: variant.price,
+                qty: 1,
+                note: note
+            });
+
+            closeOptionModal();
+        }
+
+        // --- 7. CART CORE FUNCTIONS ---
+        function addToCart(newItem) {
+            const existingIndex = cart.findIndex(i => i.uniqueKey === newItem.uniqueKey);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push(newItem);
+            }
+            saveCartToStorage();
+            updateCartUI();
+            showToast(`Ajouté au panier : ${newItem.name}`);
+        }
+
+        function updateItemQuantity(uniqueKey, delta) {
+            const index = cart.findIndex(i => i.uniqueKey === uniqueKey);
+            if (index > -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            saveCartToStorage();
+            updateCartUI();
+            renderCartModalItems();
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            document.getElementById('cart-count-badge').innerText = totalQty;
+            document.getElementById('cart-subtotal-text').innerText = formatPrice(subtotal);
+            document.getElementById('cart-total-modal').innerText = formatPrice(subtotal);
+
+            // Animate floating bar if items exist
+            const floatingBtn = document.getElementById('floating-cart-btn');
+            if (totalQty > 0) {
+                floatingBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function renderCartModalItems() {
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-400 space-y-2">
+                        <i data-lucide="shopping-bag" class="w-10 h-10 mx-auto text-gray-600"></i>
+                        <p class="text-sm font-medium">Votre panier est vide</p>
+                        <p class="text-xs text-gray-500">Ajoutez de délicieux plats depuis le menu !</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="pt-3 first:pt-0 flex items-center justify-between">
+                    <div class="flex-1 pr-3">
+                        <h4 class="font-semibold text-sm text-white">${item.name}</h4>
+                        ${item.variantName ? `<span class="text-[11px] text-gold block font-medium">${item.variantName}</span>` : ''}
+                        ${item.note ? `<span class="text-[10px] text-gray-400 italic block">Note: ${item.note}</span>` : ''}
+                        <span class="text-xs font-bold text-gray-300">${formatPrice(item.price)}</span>
+                    </div>
+
+                    <!-- Quantity Control -->
+                    <div class="flex items-center space-x-2 bg-darkBg border border-gray-700 rounded-xl p-1">
+                        <button onclick="updateItemQuantity('${item.uniqueKey}', -1)" class="w-6 h-6 rounded-lg bg-cardBg hover:bg-gray-700 flex items-center justify-center text-gray-300 font-bold">
+                            -
+                        </button>
+                        <span class="text-xs font-bold w-4 text-center text-white">${item.qty}</span>
+                        <button onclick="updateItemQuantity('${item.uniqueKey}', 1)" class="w-6 h-6 rounded-lg bg-gold hover:bg-gold-light flex items-center justify-center text-darkBg font-bold">
+                            +
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function setOrderType(type) {
+            selectedOrderType = type;
+            const btnEmporter = document.getElementById('btn-type-emporter');
+            const btnSurplace = document.getElementById('btn-type-surplace');
+            const btnLivraison = document.getElementById('btn-type-livraison');
+            const addressField = document.getElementById('delivery-address-field');
+
+            const activeClasses = "bg-gold text-darkBg border-gold shadow-md shadow-gold/20";
+            const inactiveClasses = "bg-darkBg text-gray-400 border-gray-700 hover:border-gray-600";
+
+            btnEmporter.className = `py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center ${type === 'emporter' ? activeClasses : inactiveClasses}`;
+            btnSurplace.className = `py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center ${type === 'surplace' ? activeClasses : inactiveClasses}`;
+            btnLivraison.className = `py-2 px-2 rounded-xl text-xs font-semibold border transition-all text-center ${type === 'livraison' ? activeClasses : inactiveClasses}`;
+
+            if (type === 'livraison') {
+                addressField.classList.remove('hidden');
+            } else {
+                addressField.classList.add('hidden');
+            }
+        }
+
+        // --- 8. WHATSAPP INTEGRATION ---
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("Votre panier est vide.");
+                return;
+            }
+
+            const phone = currentSelectedLocation.phone;
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            
+            let typeLabel = "À Emporter";
+            if (selectedOrderType === 'surplace') typeLabel = "Sur Place";
+            if (selectedOrderType === 'livraison') typeLabel = "Livraison";
+
+            const notes = document.getElementById('cust-notes').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            let msg = `*--- NOUVELLE COMMANDE CHAWARMA + ---*\n`;
+            msg += `📍 *Point de vente :* ${currentSelectedLocation.name}\n`;
+            msg += `🍽️ *Mode :* ${typeLabel}\n`;
+            
+            if (selectedOrderType === 'livraison' && address) {
+                msg += `🏠 *Adresse :* ${address}\n`;
+            }
+
+            msg += `\n*DÉTAILS DE LA COMMANDE :*\n`;
+            cart.forEach((item, idx) => {
+                msg += `${idx + 1}. *${item.name}*`;
+                if (item.variantName) msg += ` (${item.variantName})`;
+                msg += ` x${item.qty} - *${formatPrice(item.price * item.qty)}*\n`;
+                if (item.note) msg += `   └ _Note: ${item.note}_\n`;
+            });
+
+            msg += `\n💰 *TOTAL ESTIMÉ : ${formatPrice(subtotal)}*\n`;
+
+            if (notes) {
+                msg += `\n📝 *Remarques :* ${notes}\n`;
+            }
+
+            msg += `\n_Commande envoyée depuis le menu digital interactive._`;
+
+            const encodedMsg = encodeURIComponent(msg);
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodedMsg}`;
+
+            // Open WhatsApp link
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- 9. LOCATION MODAL LOGIC ---
+        function renderLocationsList() {
+            const container = document.getElementById('locations-list');
+            container.innerHTML = LOCATIONS.map(loc => `
+                <div onclick="selectLocation('${loc.id}')" 
+                     class="p-3.5 rounded-xl border ${loc.id === currentSelectedLocation.id ? 'border-gold bg-gold/10' : 'border-gray-800 bg-darkBg'} hover:border-gold cursor-pointer transition-all flex items-center justify-between">
+                    <div>
+                        <h4 class="font-semibold text-sm text-white">${loc.name}</h4>
+                        <p class="text-xs text-gold mt-0.5">${loc.displayPhone}</p>
+                    </div>
+                    ${loc.id === currentSelectedLocation.id ? '<i data-lucide="check-circle-2" class="w-5 h-5 text-gold"></i>' : '<i data-lucide="circle" class="w-5 h-5 text-gray-600"></i>'}
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function selectLocation(locId) {
+            const found = LOCATIONS.find(l => l.id === locId);
+            if (found) {
+                currentSelectedLocation = found;
+                document.getElementById('selected-location-name').innerText = found.name;
+                document.getElementById('cart-location-display').innerText = found.name;
+                renderLocationsList();
+                closeLocationModal();
+                showToast(`Point de vente : ${found.name}`);
+            }
+        }
+
+        // --- 10. MODAL DISPLAY TOGGLES ---
+        function openLocationModal() {
+            const modal = document.getElementById('location-modal');
+            const content = document.getElementById('location-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeLocationModal() {
+            const modal = document.getElementById('location-modal');
+            const content = document.getElementById('location-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openOptionModal() {
+            const modal = document.getElementById('option-modal');
+            const content = document.getElementById('option-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full', 'sm:scale-95');
+                content.classList.add('translate-y-0', 'sm:scale-100');
+            }, 10);
+        }
+
+        function closeOptionModal() {
+            const modal = document.getElementById('option-modal');
+            const content = document.getElementById('option-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('translate-y-0', 'sm:scale-100');
+            content.classList.add('translate-y-full', 'sm:scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openCartModal() {
+            renderCartModalItems();
+            const modal = document.getElementById('cart-modal');
+            const content = document.getElementById('cart-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full', 'sm:scale-95');
+                content.classList.add('translate-y-0', 'sm:scale-100');
+            }, 10);
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const content = document.getElementById('cart-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('translate-y-0', 'sm:scale-100');
+            content.classList.add('translate-y-full', 'sm:scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- 11. HELPERS & STORAGE ---
+        function formatPrice(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " FCFA";
+        }
+
+        function saveCartToStorage() {
+            try {
+                localStorage.setItem('chawarma_cart', JSON.stringify(cart));
+            } catch (e) {
+                console.error("Storage save error", e);
+            }
+        }
+
+        function loadCartFromStorage() {
+            try {
+                const saved = localStorage.getItem('chawarma_cart');
+                if (saved) cart = JSON.parse(saved);
+            } catch (e) {
+                cart = [];
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-gold text-darkBg text-xs font-bold px-4 py-2 rounded-full shadow-lg border border-white/20 transition-all transform translate-y-[-10px] opacity-0';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-10px]', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
