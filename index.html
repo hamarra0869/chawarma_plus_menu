@@ -381,7 +381,7 @@
     </div>
 
     <script>
-        // --- 1. DATA STRUCTURE (Avec imagesUnsplash HD fonctionnelles) ---
+        // --- 1. DATA STRUCTURE (Avec images ImgBB intégrées) ---
         const LOCATIONS = [
             { id: 'angre8', name: 'Angré 8ème tranche', phone: '2250759071911', displayPhone: '+225 07 59 07 19 11' },
             { id: 'angre7', name: 'Angré 7ème tranche', phone: '2250708906898', displayPhone: '+225 07 08 90 68 98' },
@@ -394,29 +394,29 @@
                 id: 'chawarmas',
                 title: 'Nos Chawarmas',
                 icon: 'flame',
-                photo: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=800&q=80',
+                photo: 'https://i.ibb.co/qYdQhqr5/chawarma.jpg',
                 items: [
-                    { id: 'chaw-stand', name: 'Chawarma Stand', desc: 'Mélange servi en sandwich généreux dans un pain pita artisanal', price: 2500, photo: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'chaw-plat', name: 'Chawarma Plat', desc: 'Mélange servi sur plat gourmand avec accompagnement au choix', price: 5000, photo: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'chaw-supreme', name: 'Chawarma Suprême', desc: 'Garniture riche avec extra sauce à l\'ail et fromage fondu', price: 3000, photo: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'chaw-royal', name: 'Chawarma Royal', desc: 'Format géant ultra gourmand, viande sélectionnée et frites incluses', price: 6000, photo: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=600&q=80' }
+                    { id: 'chaw-stand', name: 'Chawarma Stand', desc: 'Mélange servi en sandwich généreux dans un pain pita artisanal', price: 2500, photo: 'https://i.ibb.co/qYdQhqr5/chawarma.jpg' },
+                    { id: 'chaw-plat', name: 'Chawarma Plat', desc: 'Mélange servi sur plat gourmand avec accompagnement au choix', price: 5000, photo: 'https://i.ibb.co/qYdQhqr5/chawarma.jpg' },
+                    { id: 'chaw-supreme', name: 'Chawarma Suprême', desc: 'Garniture riche avec extra sauce à l\'ail et fromage fondu', price: 3000, photo: 'https://i.ibb.co/qYdQhqr5/chawarma.jpg' },
+                    { id: 'chaw-royal', name: 'Chawarma Royal', desc: 'Format géant ultra gourmand, viande sélectionnée et frites incluses', price: 6000, photo: 'https://i.ibb.co/qYdQhqr5/chawarma.jpg' }
                 ]
             },
             {
                 id: 'rotisserie',
                 title: 'Rôtisserie & Plats',
                 icon: 'drumstick',
-                photo: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80',
+                photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg',
                 bannerInfo: 'Viandes au choix : Poulet, Viande, Rognon, Langue, Cœur, Foie, Cervelle, Boulette, Rosto, Gésier, Taouk, Merguez, Sojok.',
                 items: [
-                    { id: 'poul-complet', name: 'Poulet Complet + Frites', desc: 'Poulet entier rôti ou braisé au choix + grande portion de frites', price: 9000, photo: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'poul-pane', name: 'Poulet Entier Pané + Frites', desc: 'Poulet entier croustillant épicé + frites doreurs', price: 9000, photo: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'demi-poul', name: 'Demi-Poulet + Frites', desc: 'Demi poulet rôti ou braisé + frites croustillantes', price: 5000, photo: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'demi-poul-pane', name: '1/2 Poulet Pané + Frites', desc: 'Demi poulet pané croustillant + frites', price: 5000, photo: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'plat-krispy', name: 'Plat Krispy', desc: 'Morceaux de poulet tendres et croustillants', price: 5000, photo: 'https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'steak-creme', name: 'Steak à la Crème Fraîche', desc: 'Tendre steak de bœuf nappé de sa sauce crème onctueuse', price: 6000, photo: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'plat-escalope', name: 'Plat Escalope', desc: 'Escalope panée ou à la crème fraîche au choix avec accompagnement', price: 6000, photo: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80' },
-                    { id: 'plat-grille', name: 'Plat de Viande Grillée', desc: 'Gésier, Taouk ou assortiment grillé au feu de bois', price: 5000, photo: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80' },
+                    { id: 'poul-complet', name: 'Poulet Complet + Frites', desc: 'Poulet entier rôti ou braisé au choix + grande portion de frites', price: 9000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'poul-pane', name: 'Poulet Entier Pané + Frites', desc: 'Poulet entier croustillant épicé + frites dorées', price: 9000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'demi-poul', name: 'Demi-Poulet + Frites', desc: 'Demi poulet rôti ou braisé + frites croustillantes', price: 5000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'demi-poul-pane', name: '1/2 Poulet Pané + Frites', desc: 'Demi poulet pané croustillant + frites', price: 5000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'plat-krispy', name: 'Plat Krispy', desc: 'Morceaux de poulet tendres et croustillants', price: 5000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'steak-creme', name: 'Steak à la Crème Fraîche', desc: 'Tendre steak de bœuf nappé de sa sauce crème onctueuse', price: 6000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'plat-escalope', name: 'Plat Escalope', desc: 'Escalope panée ou à la crème fraîche au choix avec accompagnement', price: 6000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
+                    { id: 'plat-grille', name: 'Plat de Viande Grillée', desc: 'Gésier, Taouk ou assortiment grillé au feu de bois', price: 5000, photo: 'https://i.ibb.co/cKwctSzm/rotisserie.jpg' },
                     { id: 'portion-frites', name: 'Plat de Frites', desc: 'Portion généreuse de frites dorées et croustillantes', price: 1500, photo: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80' }
                 ]
             },
